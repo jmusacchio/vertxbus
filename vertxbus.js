@@ -54,12 +54,16 @@
             that.onopen = null;
             that.onclose = null;
 
-            that.send = function(address, message, replyHandler) {
-                sendOrPub("send", address, message, replyHandler)
+            that.send = function(address, message, headers, replyHandler) {
+                if (typeof headers == 'function') {
+                    replyHandler = headers;
+                    headers = null;
+                }
+                sendOrPub("send", address, message, headers, replyHandler)
             }
 
-            that.publish = function(address, message) {
-                sendOrPub("publish", address, message, null)
+            that.publish = function(address, message, headers) {
+                sendOrPub("publish", address, message, headers, null)
             }
 
             that.registerHandler = function(address, handler) {
@@ -169,13 +173,16 @@
                 sockJSConn.send(JSON.stringify(msg));
             }
 
-            function sendOrPub(sendOrPub, address, message, replyHandler) {
+            function sendOrPub(sendOrPub, address, message, headers, replyHandler) {
                 checkSpecified("address", 'string', address);
                 checkSpecified("replyHandler", 'function', replyHandler, true);
                 checkOpen();
                 var envelope = { type : sendOrPub,
                     address: address,
                     body: message };
+                if (headers) {
+                    envelope.headers = headers;
+                }
                 if (replyHandler) {
                     var replyAddress = makeUUID();
                     envelope.replyAddress = replyAddress;
