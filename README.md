@@ -22,8 +22,8 @@ Now you can start interacting with the event bus, let's register a handler to st
 
 ~~~js
 EventBus.onopen = function() {
-    EventBus.registerHandler("vertx-news-feed", function(msg) {
-        console.log(msg);
+    EventBus.registerHandler("vertx-news-feed", function(error, msg) {
+        if(error === null) console.log(msg.body);
     })
 }
 ~~~
@@ -33,8 +33,8 @@ We subscribed to an address called `vertx-news-feed` so any time a component, th
 To send a message you can call send method.
 
 ~~~js
-EventBus.send('meteor-news-feed', message, function(reply) {
-    console.log(reply);
+EventBus.send('meteor-news-feed', message, function(error, reply) {
+    if(error === null) console.log(reply.body);
 });
 ~~~
 
