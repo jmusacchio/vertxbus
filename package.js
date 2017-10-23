@@ -1,6 +1,6 @@
 Package.describe({
   name: 'jmusacchio:vertxbus',
-  version: '0.1.0',
+  version: '0.2.0',
   // Brief, one-line summary of the package.
   summary: 'The Vert.x Event Bus Package allows any meteor app to be able to connect to Vert.x Components',
   // URL to the Git repository containing the source code for this package.
@@ -11,8 +11,8 @@ Package.describe({
 });
 
 Npm.depends({
-  'sockjs-client': '1.1.1',
-  'vertx3-eventbus-client': '3.3.0'
+  'sockjs-client': '1.1.4',
+  'vertx3-eventbus-client': '3.5.0'
 });
 
 Package.onUse(function(api) {
